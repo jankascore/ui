@@ -1,6 +1,18 @@
+import { useWeb3React } from '@web3-react/core'
 import {Button, Card, NumberCircle} from '../components'
 
-const Landing = () => {
+interface LandingProps {
+	hasBegun: () => void
+}
+
+const Landing: React.FC<LandingProps> = ({hasBegun}) => {
+	const web3 = useWeb3React();
+
+	const begin = () => {
+		hasBegun();
+		if (!web3.isActive || !web3.isActivating) web3.connector.activate()
+	}
+
 	return (
 		<Card className="h-96 w-3/4 relative" shadow>
 			<div className="h-full w-full flex flex-col justify-between items-center">
@@ -23,7 +35,7 @@ const Landing = () => {
 					</div>
 				</div>
 
-				<Button onClick={() => {}}>Begin</Button>
+				<Button onClick={begin}>Begin</Button>
 			</div>
 		</Card>
 	)

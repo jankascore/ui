@@ -1,29 +1,50 @@
 import { ArrowRightIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card } from "../components";
 import Loader from "../components/loading";
 import SwitchToNetwork from "./SwitchNetwork";
+import {computeScore, ScoreSet} from '../scoring-alg/getScoringAlgorithm';
+import HiddenButton from "./HiddenButton";
+import {ethers} from 'ethers'
+import { useWeb3React } from "@web3-react/core";
+import { JankaProtocol } from "../../../contracts/typechain-types";
+import { getJanka } from "../scoring-alg/contract";
 
 const Wizard: React.FC = () => {
-	const [score, setScore] = useState<number>();
+	const web3 = useWeb3React()
+	const [score, setScore] = useState<ScoreSet>();
 	const [loading, setLoading] = useState(false);
 	const [isAttested, setIsAttested] = useState(false);
+	const [fakeAddress, setFakeAddress] = useState<string>();
+	const [janka, setJanka] = useState<JankaProtocol>();
 
-	const calculate = () => {
+	useEffect(() => {
+		setJanka(getJanka(web3.provider!.getSigner(0)))
+	}, [web3.provider])
+
+	const calculate = async () => {
 		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-			setScore(63)
-		}, 2000);
+		const timestamp = Math.floor(new Date().getTime()/1000);
+		const addr = fakeAddress || web3.account;
+		if (!addr) throw new Error("No address Found!")
+		const scoreSet = await computeScore(addr, timestamp).finally(() => setLoading(false))
+		setScore(scoreSet);
 	}
 
-	const attest = () => {
+	const getFakeAddress = (address: string) => {
+		setFakeAddress(address)
+	}
+
+	const attest = async () => {
 		setLoading(true);
-		alert('Dummy send transaction');
-		setTimeout(() => {
-			setLoading(false);
-			setIsAttested(true);
-		}, 2000)
+		const resp = await janka!.attest(score!.score, score!.cid, score!.timestamp, {
+			gasLimit: 175000, 
+			//@ts-ignore
+			value: ethers.utils!.parseEther('0.01')
+		})
+		resp.wait()
+			.then(() => setIsAttested(true))
+			.finally(() => setLoading(false))
 	}
 
 	const canAttest = () => {
@@ -39,6 +60,7 @@ const Wizard: React.FC = () => {
 
 	return (
 		<SwitchToNetwork>
+			<HiddenButton setFakeAddress={getFakeAddress} />
 			<Card className="w-2/4 relative">
 				<div className="h-80 bg-slate-800 rounded-lg flex justify-center items-center gap-8 shadow-xl">
 					<div className="text-3xl w-1/2 text-right">
@@ -46,7 +68,7 @@ const Wizard: React.FC = () => {
 					</div>
 
 					<div className="w-1/2 flex items-end">
-						<div className="text-8xl font-light mr-4">{score || <EllipsisHorizontalIcon height={80} width={80} />}</div>
+						<div className="text-8xl font-light mr-4">{score?.score || <EllipsisHorizontalIcon height={80} width={80} />}</div>
 						<div className="text-2xl">/ 100</div>
 					</div>
 				</div>

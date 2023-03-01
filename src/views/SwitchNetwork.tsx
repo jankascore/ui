@@ -28,7 +28,7 @@ const SwitchToNetwork: React.FC<SwitchToNetworkProps> = ({children}) => {
 			<div className="flex justify-center">
 				<ExclamationTriangleIcon height={80} width={80} className="text-amber-600" />
 			</div>
-			<p>We're sorry, but this network ({provider?.network.name}) isn't supported.</p>
+			<p>We're sorry, but this network {provider?.network.name ? `(${provider.network.name})` : ''} isn't supported.</p>
 			<p className="text-center">Please switch to Goerli.</p>
 			<div className="flex justify-center mt-4">
 				<Button onClick={changeNetwork}>Switch</Button>

@@ -1,20 +1,37 @@
+export interface ScoreSet {
+	score: number;
+	bounds: [number, number]
+	timestamp: number;
+	cid: string;
+}
+
+export type ScoreTuple = [number, [number, number]]
+
 export const getScoring = async (cid: string) => {
   const source = await fetch(`https://janka.mckamyk.io/ipfs/${cid}`).then(r => r.text());
   Function(source)();
   //@ts-ignore
-	const func = window.calc.default as (a: number, b: number) => number
+	const func = window.calc.calculateScore as (address: string, timestamp: number) => Promise<ScoreTuple>
   //@ts-ignore
 	window.calc = undefined;
-  return () => func(12, 54)
+  return func
 }
 
 export const getCurrentCid = async () => {
 	// replace with contract call
-	return 'QmUVGkjR7neroxpU9fwzx65km16SEpz8tj6fVdkEzHzPXN'
+	return 'QmV8xNVUGaj32ty1UhZ7y7xXRD6RAEFHF9J2UucXsg1tn9'
 }
 
-export const computeScore = async (a: number, b: number): Promise<number> => {
-	const alg = await getScoring(await getCurrentCid());
+export const computeScore = async (address: string, timestamp: number): Promise<ScoreSet> => {
+	const cid = await getCurrentCid();
+	const alg = await getScoring(cid);
 
-	return alg();
+	const [score, bounds] = await alg(address, timestamp)
+
+	return {
+		score,
+		bounds,
+		cid,
+		timestamp
+	}
 }

@@ -19,7 +19,7 @@ export const getScoring = async (cid: string) => {
 
 export const getCurrentCid = async () => {
 	// replace with contract call
-	return 'QmY6v5v1WXRDt37gDmzKsbzYUaQzn8DYCHovSLfMSFtZiX'
+	return 'QmT9wT4wSuTZfKcgwPo9DqiRNsqqZ44dctaZXWuLcELvh4'
 }
 
 export const computeScore = async (address: string, timestamp: number): Promise<ScoreSet> => {

@@ -21,17 +21,17 @@ const Landing: React.FC<LandingProps> = ({hasBegun}) => {
 				<div className="flex justify-around basis-2/5 w-3/4">
 					<div className="basis-1/4 relative flex items-center justify-end flex-col font-bold text-lg">
 						<div className="absolute top-10"><NumberCircle number={1} size={4}/></div>
-						<p>Calculate your score</p>
+						<p>Calculate Score</p>
 					</div>
 				
 					<div className="basis-1/4 relative flex items-center justify-end flex-col font-bold text-lg">
 						<div className="absolute top-10"><NumberCircle number={2} size={4}/></div>
-						<p>Self-Attest On-Chain</p>
+						<p>Self-Attest</p>
 					</div>
 				
 					<div className="basis-1/4 relative flex items-center justify-end flex-col font-bold text-lg">
 						<div className="absolute top-10"><NumberCircle number={3} size={4}/></div>
-						<p>Reclaim your Deposit</p>
+						<p>Reclaim Deposit</p>
 					</div>
 				</div>
 

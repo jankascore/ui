@@ -1,4 +1,5 @@
-import { useWeb3React } from '@web3-react/core'
+import { Web3Button } from '@web3modal/react';
+import { useAccount } from 'wagmi';
 import {Button, Card, NumberCircle} from '../components'
 
 interface LandingProps {
@@ -6,12 +7,7 @@ interface LandingProps {
 }
 
 const Landing: React.FC<LandingProps> = ({hasBegun}) => {
-	const web3 = useWeb3React();
-
-	const begin = () => {
-		hasBegun();
-		if (!web3.isActive || !web3.isActivating) web3.connector.activate()
-	}
+	const {isConnected} = useAccount();
 
 	return (
 		<Card className="h-96 w-3/4 relative" shadow>
@@ -35,7 +31,7 @@ const Landing: React.FC<LandingProps> = ({hasBegun}) => {
 					</div>
 				</div>
 
-				<Button onClick={begin}>Begin</Button>
+				{ !isConnected ? <Web3Button /> : <Button onClick={() => hasBegun()}>Begin</Button> }
 			</div>
 		</Card>
 	)

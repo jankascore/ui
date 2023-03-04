@@ -7,8 +7,8 @@ const SwitchToNetwork: React.FC = () => {
 	const {chain} = useNetwork();
 	const {switchNetwork} = useSwitchNetwork()
 
-	const changeNetwork = () => {
-		switchNetwork?.(5)
+	const changeNetwork = (id: number) => {
+		switchNetwork?.(id)
 	}
 
 	return (
@@ -18,8 +18,9 @@ const SwitchToNetwork: React.FC = () => {
 			</div>
 			<p>We're sorry, but this network {chain ? `(${chain.name})` : ''} isn't supported.</p>
 			<p className="text-center">Please switch to Goerli.</p>
-			<div className="flex justify-center mt-4">
-				<Button onClick={changeNetwork}>Switch</Button>
+			<div className="flex justify-center gap-2 mt-4">
+				<Button onClick={() => changeNetwork(5)}>Goerli</Button>
+				<Button onClick={() => changeNetwork(84531)}>Base Goerli</Button>
 			</div>
 		</Card>
 	)

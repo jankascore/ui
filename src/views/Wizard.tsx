@@ -21,8 +21,8 @@ const Wizard: React.FC = () => {
 
 	useEffect(() => {
 		getFlowState();
-		if (!restart) {
-			const {score, algorithmCID, finalizationTime} = janka.attestation!
+		if (!restart && janka.attestation) {
+			const {score, algorithmCID, finalizationTime} = janka.attestation
 			setScore({score, bounds: [score, score], cid: algorithmCID, timestamp: Number(finalizationTime.toString())})
 		}
 	}, [janka.attestation, address, restart])

@@ -16,8 +16,8 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors: modalConnectors({
     projectId: import.meta.env.VITE_PROJECT_ID,
-    version: '2',
-    appName: "web3Modal",
+    version: '1',
+    appName: "Janka Score",
     chains
   }),
   provider
@@ -45,13 +45,13 @@ function App() {
   return (
     <div className="h-screen w-screen bg-gradient-to-tr from-slate-900 to-slate-700 flex items-center justify-center">
       <div className="scroll-auto w-full flex items-center justify-center">
-        <div className="text-6xl absolute top-10 select-none cursor-default" style={{fontFamily: 'Fortune'}}>Janka Score</div>
+        <div className="text-6xl absolute top-10 select-none cursor-default z-20" style={{fontFamily: 'Fortune'}}>Janka Score</div>
 
         {chain && chain.id !== 5 ? <SwitchNetwork /> : 
           !isBegun || !isConnected ? <Landing hasBegun={() => setIsBegun(true)} /> : <Wizard />
         }
 
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-2 right-2 z-20">
           <Web3Button />
         </div>
       </div>

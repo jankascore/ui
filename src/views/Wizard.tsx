@@ -113,9 +113,9 @@ const Wizard: React.FC = () => {
 	return <>
 		{flowState === 'final' && <div className="z-10"><Confetti width={window.innerWidth} height={window.innerHeight} /></div>}
 		<HiddenButton setFakeAddress={getFakeAddress} />
-		<Card className="w-2/4 relative z-20">
+		<Card className="w-full max-w-lg relative z-20">
 			<div className="h-80 bg-slate-800 rounded-lg flex justify-center items-center gap-8 shadow-xl">
-				<div className="text-3xl w-1/2 text-right">
+				<div className="text-xl md:text-3xl w-1/2 text-right">
 					Your Janka Score:
 				</div>
 
@@ -124,7 +124,7 @@ const Wizard: React.FC = () => {
 					<div className="text-2xl">/ 100</div>
 				</div>
 			</div>
-			<div className="h-24 flex items-center justify-center gap-16">
+			<div className="h-24 flex items-center justify-center gap-2">
 				<Button disabled={flowState!=='score'} onClick={calculate}>Calculate</Button>
 
 				<ArrowRightIcon height={20} width={20} />

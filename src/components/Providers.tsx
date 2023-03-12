@@ -1,28 +1,27 @@
 'use client'
-import {EthereumClient, modalConnectors, walletConnectProvider} from '@web3modal/ethereum'
+import {EthereumClient, w3mConnectors, w3mProvider} from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import {goerli, baseGoerli} from 'wagmi/chains'
 
-const projectId = '96a1648eb51bc6073344bddaf724f5a4';
+export const projectId = '96a1648eb51bc6073344bddaf724f5a4';
 
 const chains = [goerli, baseGoerli]
 const {provider} = configureChains(chains, [
-  walletConnectProvider({ projectId })
+  w3mProvider({ projectId })
 ])
 
-const wagmiClient = createClient({
+export const wagmiClient = createClient({
   autoConnect: true,
-  connectors: modalConnectors({
+  connectors: w3mConnectors({
     projectId,
     chains,
-    version: '1',
-    appName: "Janka Score",
+    version: 1,
   }),
   provider
 })
 
-const ethereumClient = new EthereumClient(wagmiClient, chains)
+export const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 interface ProvidersProps {
 	children: React.ReactNode
@@ -30,9 +29,14 @@ interface ProvidersProps {
 
 const Providers: React.FC<ProvidersProps> = ({children}) => {
   return <>
+    <div>
       <WagmiConfig client={wagmiClient}>
-				{children}
+
+        {children}
       </WagmiConfig>
+
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+    </div>
   </>
 }
 

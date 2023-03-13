@@ -9,7 +9,11 @@ interface LandingProps {
 
 const Landing: React.FC<LandingProps> = ({hasBegun}) => {
 	const {isConnected} = useAccount();
+	const [begin, setBegin] = useState(false);
 
+	useEffect(() => {
+		setBegin(isConnected)
+	}, [setBegin, isConnected])
 
 	return (
 		<Card className="md:h-72 w-3/4 max-w-3xl relative" shadow>
@@ -34,7 +38,7 @@ const Landing: React.FC<LandingProps> = ({hasBegun}) => {
 				</div>
 
 				<div>
-					{ isConnected ? <Button onClick={() => hasBegun()}>Begin</Button> : <Web3Button />}
+					{ begin ? <Button onClick={() => hasBegun()}>Begin</Button> : <Web3Button />}
 				</div>
 			</div>
 		</Card>

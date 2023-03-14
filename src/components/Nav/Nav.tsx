@@ -1,6 +1,6 @@
-import { Web3Button, Web3NetworkSwitch } from "@web3modal/react"
 import Link from "next/link"
-import WalletButtons from "./WalletButtons"
+import NavLink from './NavLink'
+import WalletButtons from "../WalletButtons"
 
 const Nav = () => {
 	return (
@@ -9,9 +9,8 @@ const Nav = () => {
 				<div className="text-2xl select-none cursor-default" style={{fontFamily: 'Fortune'}}>Janka Score</div>
 
 				<div className="absolute w-full left-0 right-0 m-auto flex justify-center gap-8">
-					<Link href="/">Home</Link>
-					<Link href="/about">About</Link>
-					<Link href="links">Linktree</Link>
+					<NavLink href="/">Attest</NavLink>
+					<NavLink href="/check">Check</NavLink>
 				</div>
 
 				<div className="w-fit">

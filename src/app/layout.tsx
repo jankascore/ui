@@ -1,4 +1,4 @@
-import Nav from '@/components/Nav'
+import Nav from '@/components/Nav/Nav'
 import Providers from '../components/Providers'
 import './globals.css'
 
@@ -13,7 +13,9 @@ export default function RootLayout({
         <Providers>
           <Nav />
 
-          {children}
+          <div className="h-screen w-screen bg-gradient-to-tr from-slate-900 to-slate-700 pt-24 px-8">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

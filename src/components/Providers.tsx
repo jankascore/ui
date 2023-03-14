@@ -35,7 +35,10 @@ const Providers: React.FC<ProvidersProps> = ({children}) => {
         {children}
       </WagmiConfig>
 
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} themeVariables={{
+        // @ts-ignore
+        "--w3m-color-overlay": "#0c6c71d4"
+      }}/>
     </div>
   </>
 }

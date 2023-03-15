@@ -2,6 +2,13 @@ import Nav from '@/components/Nav/Nav'
 import Providers from '../components/Providers'
 import './globals.css'
 
+export const metadata = {
+  icons: {
+    icon: '/crystalball.svg'
+  },
+  title: 'Janka Score 🌳'
+}
+
 export default function RootLayout({
   children,
 }: {
